@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ----------------------------- style ----------------------------- -->
+    <style>
+:root {
+    --primary-background: #ca0000;
+    --secondary-background: rgba(94, 52, 52, 0.6);
+    --snake-color: #fff;
+    --snake-head-color: #ff4081;
+    --food-color: #0052ea;
+    --button-background: #cc2e2e;
+    --button-hover-background: #a10000;
+    --text-color: #fff;
+    --text-shadow-color: #000000;
+    --box-shadow-color: #000000;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    background-color: var(--primary-background);
+    color: var(--text-color);
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    text-align: center;
+}
+
+canvas {
+    background-color: #400000;
+    border: 2px solid var(--snake-color);
+    box-shadow: 0px 0px 20px var(--box-shadow-color);
+    max-width: 100%;
+}
+
+#score-container {
+    margin-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+    background-color: var(--secondary-background);
+    padding: 10px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+#score,
+#high-score {
+    padding: 10px;
+    font-size: 18px;
+    color: var(--text-color);
+}
+
+#score span,
+#high-score span {
+    font-weight: bold;
+    color: var(--snake-head-color);
+}
+
+#mobile-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+button {
+    background-color: var(--button-background);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--button-hover-background);
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 18px;
+    margin-top: 0;
+}
+
+@media screen and (max-width: 600px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    canvas {
+        max-width: 80%;
+    }
+}
+
+@media screen and (min-width: 601px) {
+    button {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+}
+
+    </style>
+<!-- ----------------------------- style ----------------------------- -->
+    <title>Gabut aja sih....</title>
+</head>
+<body>
+<!-- ----------------------------- body ----------------------------- -->
+    <h1>Gabut aja sih....</h1>
+    <div style="overflow: hidden;"> <!-- Wrap canvas to maintain responsiveness -->
+        <canvas id="snakeCanvas" width="400" height="400"></canvas>
+    </div>
+    <div id="score-container">
+        <div id="score">Score: <span>0</span></div>
+        <div id="high-score">High Score: <span>0</span></div>
+    </div>
+    <div id="mobile-controls">
+        <button id="upButton">&#8593;</button>
+    </div>
+    <div id="mobile-controls">
+        <button id="leftButton">&#8592;</button>
+        <button id="downButton">&#8595;</button>
+        <button id="rightButton">&#8594;</button>
+    </div>
+
+    <img id="foodImage" src="hero-merah.png" style="display: none;">
+<!-- ----------------------------- body ----------------------------- -->
+<!-- ----------------------------- Scripts ----------------------------- -->
+    <script>
+        const canvas = document.getElementById('snakeCanvas');
+        const ctx = canvas.getContext('2d');
+        const gridSize = 20;
+        const canvasSize = canvas.width / gridSize;
+        let snake = [{ x: 10, y: 10 }];
+        let direction = 'right';
+        let food = getRandomFood();
+        let score = 0;
+        let highScore = 0;
+        let speed = 150;
+        let initialSpeed = speed;
+
+        function drawSnake() {
+            snake.forEach((segment, index) => {
+                ctx.fillStyle = index === 0 ? '#ff4081' : '#fff';
+                ctx.shadowBlur = index === 0 ? 10 : 0;
+                ctx.shadowColor = '#ff4081';
+                ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize, gridSize);
+                ctx.shadowBlur = 0;
+            });
+        }
+
+        function drawFood() {
+            const foodImage = document.getElementById('foodImage');
+            ctx.drawImage(foodImage, food.x * gridSize, food.y * gridSize, gridSize, gridSize);
+        }
+
+        function getRandomFood() {
+            return {
+                x: Math.floor(Math.random() * canvasSize),
+                y: Math.floor(Math.random() * canvasSize)
+            };
+        }
+
+        function moveSnake() {
+            const head = { ...snake[0] };
+
+            switch (direction) {
+                case 'up':
+                    head.y = (head.y - 1 + canvasSize) % canvasSize;
+                    break;
+                case 'down':
+                    head.y = (head.y + 1) % canvasSize;
+                    break;
+                case 'left':
+                    head.x = (head.x - 1 + canvasSize) % canvasSize;
+                    break;
+                case 'right':
+                    head.x = (head.x + 1) % canvasSize;
+                    break;
+            }
+
+            snake.unshift(head);
+
+            if (head.x === food.x && head.y === food.y) {
+                food = getRandomFood();
+                score++;
+                updateScore();
+                increaseSpeed();
+            } else {
+                snake.pop();
+            }
+        }
+
+        function checkCollision() {
+            const head = snake[0];
+            return snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y);
+        }
+
+        function increaseSpeed() {
+            speed = Math.max(50, initialSpeed - Math.floor(score / 5) * 5);
+        }
+
+        function updateScore() {
+            const scoreElement = document.querySelector('#score span');
+            scoreElement.innerText = score;
+
+            if (score > highScore) {
+                highScore = score;
+                const highScoreElement = document.querySelector('#high-score span');
+                highScoreElement.innerText = highScore;
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (checkCollision()) {
+                resetGame();
+            }
+
+            drawSnake();
+            drawFood();
+
+            // ctx.fillStyle = '#fff';
+            // ctx.font = '20px Arial';
+            // ctx.fillText(`Score: ${score}`, 10, 25);
+        }
+
+        function resetGame() {
+            alert(`Game Over! Score Anda: ${score}`);
+            snake = [{ x: 10, y: 10 }];
+            direction = 'right';
+            food = getRandomFood();
+            score = 0;
+            speed = initialSpeed;
+            updateScore();
+        }
+
+        function gameLoop() {
+            moveSnake();
+            draw();
+            setTimeout(gameLoop, speed);
+        }
+
+        document.addEventListener('keydown', (event) => {
+            switch (event.key) {
+                case 'ArrowUp':
+                    if (direction !== 'down') direction = 'up';
+                    break;
+                case 'ArrowDown':
+                    if (direction !== 'up') direction = 'down';
+                    break;
+                case 'ArrowLeft':
+                    if (direction !== 'right') direction = 'left';
+                    break;
+                case 'ArrowRight':
+                    if (direction !== 'left') direction = 'right';
+                    break;
+            }
+        });
+
+        gameLoop();
+
+    </script>
+    <script>
+                document.getElementById('upButton').addEventListener('click', () => {
+            if (direction !== 'down') direction = 'up';
+        });
+
+        document.getElementById('downButton').addEventListener('click', () => {
+            if (direction !== 'up') direction = 'down';
+        });
+
+        document.getElementById('leftButton').addEventListener('click', () => {
+            if (direction !== 'right') direction = 'left';
+        });
+
+        document.getElementById('rightButton').addEventListener('click', () => {
+            if (direction !== 'left') direction = 'right';
+        });
+    </script>
+<!-- ----------------------------- Scripts ----------------------------- -->
+</body>
+</html>
