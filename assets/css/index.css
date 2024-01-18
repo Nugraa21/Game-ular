@@ -1,0 +1,75 @@
+:root {
+    --primary-background: #800000;
+    --secondary-background: rgba(94, 52, 52, 0.6);
+    --snake-color: #fff;
+    --snake-head-color: #ffd900;
+    --food-color: #0052ea;
+    --button-background: #cc2e2e;
+    --button-hover-background: #a10000;
+    --text-color: #fff;
+    --text-shadow-color: #000000;
+    --buton-shadow-color: #58040461;
+    --box-shadow-color: #000000;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    background-color: var(--primary-background);
+    color: var(--text-color);
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    text-align: center;
+}
+
+.canvas a{
+    border-radius: 10px 0px 10px 0px ;
+    padding: 5px ;
+    color: #000000;
+    background-color: #ffe600;
+    border: 2px solid var(--snake-color);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.305);
+}
+.canvas a:hover{
+    color: #ffffff;
+    background-color: #ff0000;
+}
+
+
+h1 {
+    text-shadow: 0px 0px 10px var(--buton-shadow-color);
+    font-size: 36px;
+    margin-bottom: 10px;
+
+}
+
+p {
+    padding: 1rem 1rem 1rem ;
+    margin-top: 1rem;
+    font-size: 14px;
+    margin-top: 0;
+    border-bottom: 2px solid var(--secondary-background);
+}
+a{
+    color: rgb(255, 242, 0);
+    text-decoration: none;
+}
+a:hover{
+    color: rgb(255, 255, 255);
+    border-bottom: 1px solid white;
+}
+
+@media screen and (max-width: 800px) {
+    
+    h1 {
+        font-size: 24px;
+    }
+
+    canvas {
+        max-width: 80%;
+    }
+}

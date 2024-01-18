@@ -98,14 +98,19 @@ function draw() {
 }
 
 function resetGame() {
-    alert(`Game Over! Score Anda: ${score}`);
+    alert(`Game Over!  Score: ${score}`);
+
     snake = [{ x: 10, y: 10 }];
     direction = 'right';
     food = getRandomFood();
     score = 0;
     speed = initialSpeed;
     updateScore();
+
+    // Redirect to another web page
+    window.location.href = 'index.html'; // Replace with your desired URL
 }
+
 
 function gameLoop() {
     moveSnake();
