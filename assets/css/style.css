@@ -56,13 +56,13 @@ canvas {
 
 #score span,
 #high-score span {
+    border-bottom: 2px solid var(--button-background);
     font-weight: bold;
     color: var(--snake-head-color);
 }
 
 #mobile-controls {
     display: none;
-    /* display: flex; */
     justify-content: center;
     margin-top: 10px;
 }
@@ -72,7 +72,6 @@ button {
     color: var(--text-color);
     border: 2px solid rgba(255, 255, 255, 0.104);
     box-shadow: 0px 0px 5px var(--buton-shadow-color);
-    /* border: none; */
     padding: 10px 15px;
     text-align: center;
     text-decoration: none;
@@ -106,8 +105,12 @@ a{
     color: rgb(255, 242, 0);
     text-decoration: none;
 }
+a:hover{
+    color: rgb(255, 255, 255);
+    border-bottom: 1px solid white;
+}
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
     #mobile-controls {
         display: block;
         /* display: flex; */
@@ -122,7 +125,7 @@ a{
     }
 }
 
-@media screen and (min-width: 601px) {
+@media screen and (min-width: 800px) {
     button {
         padding: 10px 15px;
         font-size: 16px;
