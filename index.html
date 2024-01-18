@@ -1,34 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ----------------------------- Style ----------------------------- -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- ----------------------------- Style ----------------------------- -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gabut aja sih....</title>
 </head>
 <body>
 <!-- ----------------------------- body ----------------------------- -->
-    <h1>Gabut aja sih....</h1>
-    <div style="overflow: hidden;"> <!-- Wrap canvas to maintain responsiveness -->
-        <canvas id="snakeCanvas" width="400" height="400"></canvas>
+<!-- ------------- Container game ------------- -->
+<h1 id="typing-text">Gabut aja sih....</h1>
+<!-- ------------- Score permainan ------------- -->
+<div id="score-container">
+    <div id="score">Score: <span>0</span></div>
+    <div id="high-score">High Score: <span>0</span></div>
+</div>
+<!-- ------------- Score permainan ------------- -->
+    <div> 
+        <canvas id="snakeCanvas" width="500" height="500"></canvas>
     </div>
-    <div id="score-container">
-        <div id="score">Score: <span>0</span></div>
-        <div id="high-score">High Score: <span>0</span></div>
+    <!-- ------------- Container game ------------- -->
+    <!-- ------------- Conreols ------------- -->
+    <div class="controls">
+        <div id="mobile-controls">
+            <button id="upButton">&#8593;</button>
+        </div>
+        <div id="mobile-controls">
+            <button id="leftButton">&#8592;</button>
+            <button id="downButton">&#8595;</button>
+            <button id="rightButton">&#8594;</button>
+        </div>
     </div>
-    <div id="mobile-controls">
-        <button id="upButton">&#8593;</button>
-    </div>
-    <div id="mobile-controls">
-        <button id="leftButton">&#8592;</button>
-        <button id="downButton">&#8595;</button>
-        <button id="rightButton">&#8594;</button>
-    </div>
-    <img id="foodImage" src="assets/img/hero-merah.png" style="display: none;">
-<!-- ----------------------------- body ----------------------------- -->
-<!-- ----------------------------- Scripts ----------------------------- -->
-<script src="assets/game/game.js"></script>
-<script src="assets/console/controls.js"></script>
-<!-- ----------------------------- Scripts ----------------------------- -->
+    <!-- ------------- Conreols ------------- -->
+    <p>controls menggunakan tombol ( &#8593; &#8595; &#8592; &#8594; )
+        <br>By :
+        <a href="https://nugraa21.github.io/my-Profils/">
+        Nugra21.io
+        </a>
+    </p>
+    <!-- ------------- Img ( Makanan ular ) ------------- -->
+        <img id="foodImage" src="assets/img/hero-merah.png" style="display: none;">
+    <!-- ------------- Img ( Makanan ular ) ------------- -->
+    <!-- ----------------------------- body ----------------------------- -->
+    <!-- ----------------------------- Scripts ----------------------------- -->
+    <!-- ----------------------------- Game ----------------------------- -->
+        <script src="assets/game/game.js"></script>
+    <!-- ----------------------------- Game ----------------------------- -->
+    <!-- ----------------------------- Controls ----------------------------- -->
+        <script src="assets/console/controls.js"></script>
+    <!-- ----------------------------- Controls ----------------------------- -->
+    <!-- ----------------------------- Kunci game ----------------------------- -->
+        <script src="assets/kunci/key-game.js"></script>
+    <!-- ----------------------------- Kunci game ----------------------------- -->
+    <!-- ----------------------------- Scripts ----------------------------- -->
 </body>
 </html>
